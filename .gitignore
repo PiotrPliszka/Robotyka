@@ -1,0 +1,65 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Środowiska wirtualne
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# ===== C++ =====
+# Pliki obiektowe i biblioteki
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+
+# Pliki wykonywalne
+*.exe
+*.out
+*.app
+
+# Prekompilowane nagłówki i debug
+*.gch
+*.pch
+*.pdb
+*.ilk
+*.idb
+
+# Katalogi budowania (w dowolnym folderze zadania, np. zad01/build/)
+build/
+cmake-build-*/
+out/
+bin/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# ===== IDE / edytory =====
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+.vs/
+*.swp
+*~
+
+# ===== System =====
+Thumbs.db
+desktop.ini
+.DS_Store
