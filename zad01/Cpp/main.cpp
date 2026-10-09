@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <climits>
-#include <cmath>
 #include <iostream>
 #include <map>
 #include <set>
@@ -49,8 +48,8 @@ struct Point {
     }
 };
 
-float heurestic(Point a, Point b) {
-    return abs(a.x - b.x) + abs(a.y - b.y);
+double heurestic(Point a, Point b) {
+    return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
 
 vector<Point> get_neighbours(Point node) {
@@ -58,8 +57,8 @@ vector<Point> get_neighbours(Point node) {
     int x = node.x;
     int y = node.y;
 
-    int dx[4] = {0, 0, 1, -1};
-    int dy[4] = {1, -1, 0, 0};
+    int dx[4] = {-1, 1, 0, 0};
+    int dy[4] = { 0, 0, -1, 1};
 
     for (int i = 0; i < 4; i++) {
         int nx = x + dx[i];
@@ -91,16 +90,16 @@ vector<Point> aStar(Point start, Point end) {
     set<Point> closed_set = {};
     map<Point, Point> came_from;
     map<Point, int> g_score;
-    map<Point, int> f_score;
+    map<Point, double> f_score;
     g_score[start] = 0;
     f_score[start] = heurestic(start, end);
 
     while (!open_set.empty()) {
         Point current;
-        int lowest_f = INT_MAX;
+        double lowest_f = INFINITY;
 
         for (const auto node : open_set) {
-            int node_f = f_score.count(node) ? f_score[node] : INT_MAX;
+            double node_f = f_score.count(node) ? f_score[node] : INFINITY;
             if (node_f < lowest_f) {
                 lowest_f = node_f;
                 current = node;
@@ -133,17 +132,37 @@ vector<Point> aStar(Point start, Point end) {
     return {};
 }
 
+void printMatrix(const int grid[ROWS][COLS]) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            cout << grid[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
 int main() {
-    Point start = {0, 0};
-    Point end = {19, 19};
+    // macierz jest zapisana od gory, wiec wiersz "pierwszy od dolu" to ROWS - 1
+    Point start = {ROWS - 1, 0};      // (0,0) z zadania: lewy dolny rog
+    Point end = {0, COLS - 1};        // (19,19) z zadania: prawy gorny rog
 
     vector<Point> path = aStar(start, end);
 
-    if (!path.empty()) {
-        cout << "Znaleziono sciezke! Liczba krokow: " << path.size() << "\n";
-    } else {
+    if (path.empty()) {
         cout << "Nie znaleziono sciezki!\n";
+        printMatrix(matrix);
+        return 0;
     }
 
+    int result[ROWS][COLS];
+    for (int i = 0; i < ROWS; i++)
+        for (int j = 0; j < COLS; j++)
+            result[i][j] = matrix[i][j];
+
+    for (const auto p : path) {
+        result[p.x][p.y] = 3;
+    }
+
+    printMatrix(result);
     return 0;
 }
