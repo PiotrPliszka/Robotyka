@@ -1,0 +1,7 @@
+**/node_modules
+**/dist
+**/cmake-build-*
+**/.idea
+**/.DS_Store
+Cpp/*.exe
+Cpp/*.pdf
